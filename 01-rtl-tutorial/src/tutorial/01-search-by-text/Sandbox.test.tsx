@@ -20,5 +20,13 @@ describe("Sandbox 01 tests", () => {
     const phoneRegex = /\d{3}-\d{3}-\d{4}/;
     const phoneText = screen.getByText(phoneRegex);
     expect(phoneText).toBeInTheDocument();
+
+    // 2. queryByText
+    const errorMsg = screen.queryByText("Error message");
+    expect(errorMsg).not.toBeInTheDocument();
+
+    // 3. getAllByText
+    const items = screen.getAllByText("Item 1");
+    expect(items).toHaveLength(4);
   });
 });
