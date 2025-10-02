@@ -28,5 +28,10 @@ describe("Sandbox 01 tests", () => {
     // 3. getAllByText
     const items = screen.getAllByText("Item 1");
     expect(items).toHaveLength(4);
+
+    // 4. findByText
+    // const asyncMsg = await screen.findByText("Async message");
+    // expect(asyncMsg).toBeInTheDocument();
+    expect(await screen.findByText("Async message")).toBeInTheDocument();
   });
 });
