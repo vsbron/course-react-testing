@@ -9,8 +9,10 @@ const Sandbox = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAsyncButton(true);
-    }, 1000);
-    return clearInterval(timer);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   // Returned JSX
@@ -23,12 +25,12 @@ const Sandbox = () => {
       </nav>
 
       {/* HEADINGS */}
-      <h1>Main Heading</h1>
-      <h2>Subheading</h2>
+      <h1>Heading</h1>
+      <h2>Heading</h2>
       <img src="example.jpg" alt="Example" />
 
       {/* REGULAR BUTTONS */}
-      <button>Click Me</button>
+      <button>Click</button>
       <button>Submit</button>
       <button>Cancel</button>
 
