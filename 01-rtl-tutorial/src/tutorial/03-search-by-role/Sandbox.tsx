@@ -1,4 +1,43 @@
+import { useEffect, useState } from "react";
+
 const Sandbox = () => {
-  return <div>Sandbox</div>;
+  // Create state values for async button and error
+  const [showAsyncButton, setShowAsyncButton] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
+
+  // useEffect function that enables async button
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAsyncButton(true);
+    }, 1000);
+    return clearInterval(timer);
+  }, []);
+
+  // Returned JSX
+  return (
+    <div>
+      {/* NAV */}
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+      </nav>
+
+      {/* HEADINGS */}
+      <h1>Main Heading</h1>
+      <h2>Subheading</h2>
+      <img src="example.jpg" alt="Example" />
+
+      {/* REGULAR BUTTONS */}
+      <button>Click Me</button>
+      <button>Submit</button>
+      <button>Cancel</button>
+
+      {/* CONDITIONAL ERROR FOR queryByRole */}
+      {showError && <button>Error</button>}
+
+      {/* ASYNC BUTTON FOR findByRole */}
+      {showAsyncButton && <button>Async button</button>}
+    </div>
+  );
 };
 export default Sandbox;
