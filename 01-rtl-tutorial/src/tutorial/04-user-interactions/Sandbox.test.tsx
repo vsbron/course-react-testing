@@ -19,6 +19,29 @@ describe("04-user-interactions", () => {
     // Get the buttons and check for the count
     const increaseButton = screen.getByRole("button", { name: /increase/i });
     const decreaseButton = screen.getByRole("button", { name: /decrease/i });
-    expect(screen.getByText(/count: 0/i));
+    expect(screen.getByText(/count: 0/i)).toBeInTheDocument();
+
+    fireEvent.click(increaseButton);
+    expect(screen.getByText(/count: 1/i)).toBeInTheDocument();
+    fireEvent.click(decreaseButton);
+    expect(screen.getByText(/count: 0/i)).toBeInTheDocument();
+  });
+
+  test("should increment and decrement count with userEvent", async () => {
+    // Render the sandbox
+    render(<Sandbox />);
+
+    // Get the user from userEvent
+    const user = userEvent.setup();
+
+    // Get the buttons and check for the count
+    const increaseButton = screen.getByRole("button", { name: /increase/i });
+    const decreaseButton = screen.getByRole("button", { name: /decrease/i });
+    expect(screen.getByText(/count: 0/i)).toBeInTheDocument();
+
+    await user.click(increaseButton);
+    expect(screen.getByText(/count: 1/i)).toBeInTheDocument();
+    await user.click(decreaseButton);
+    expect(screen.getByText(/count: 0/i)).toBeInTheDocument();
   });
 });
