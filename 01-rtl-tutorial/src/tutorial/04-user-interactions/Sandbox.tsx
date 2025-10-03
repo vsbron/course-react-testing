@@ -36,6 +36,7 @@ const Sandbox = () => {
       <div>
         {isLiked ? (
           <button
+            aria-label="like button"
             onClick={handleToggleLike}
             className="block mx-auto text-2xl text-red-500 mt-16"
           >
@@ -43,6 +44,7 @@ const Sandbox = () => {
           </button>
         ) : (
           <button
+            aria-label="unlike button"
             onClick={handleToggleLike}
             className="block mx-auto text-2xl text-red-500 mt-16"
           >

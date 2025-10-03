@@ -44,4 +44,27 @@ describe("04-user-interactions", () => {
     await user.click(decreaseButton);
     expect(screen.getByText(/count: 0/i)).toBeInTheDocument();
   });
+
+  test("like and unlike buttons", async () => {
+    // Render the sandbox
+    render(<Sandbox />);
+
+    // Get the user from userEvent
+    const user = userEvent.setup();
+
+    // Check the like/unlike buttons before the user clicks
+    const unlikeButton = screen.getByRole("button", { name: "unlike button" });
+    expect(unlikeButton).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "like button" })
+    ).not.toBeInTheDocument();
+    await user.click(unlikeButton);
+
+    // Check the like/unlike buttons after the user clicks
+    const likeButton = screen.getByRole("button", { name: "like button" });
+    expect(likeButton).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "unlike button" })
+    ).not.toBeInTheDocument();
+  });
 });
