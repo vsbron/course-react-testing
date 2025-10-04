@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Form from "../Form";
-import { type Review } from "../Sandbox";
 
 // Helper function to get all form values
 export const getFormElements = () => {
