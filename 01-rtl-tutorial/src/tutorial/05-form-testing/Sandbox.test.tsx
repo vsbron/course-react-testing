@@ -56,5 +56,89 @@ describe("05-form-testing", () => {
     expect(passwordInput).toHaveValue("123456");
     expect(confirmPasswordInput).toHaveValue("123456");
   });
-  ``;
+
+  // TEST #3
+  test("should show email error if email is invalid", async () => {
+    // Get the input elements
+    const { emailInput, submitButton } = getFormElements();
+
+    // Check if there's no email error message
+    expect(screen.queryByText(/invalid email/i)).not.toBeInTheDocument();
+
+    // Type the invalid email
+    await user.type(emailInput, "invalid");
+    await user.click(submitButton);
+
+    // Check if there's is email error message
+    expect(screen.getByText(/invalid email/i)).toBeInTheDocument();
+  });
+
+  // TEST #4
+  test("should show password error if password is less than 5 characters", async () => {
+    // Get the input elements
+    const { emailInput, submitButton, passwordInput } = getFormElements();
+
+    // Check if there's no password error message
+    expect(
+      screen.queryByText(/password must be at least 5 characters/i)
+    ).not.toBeInTheDocument();
+
+    // Type the invalid password
+    await user.type(emailInput, "test@test.com");
+    await user.type(passwordInput, "1234");
+    await user.click(submitButton);
+
+    // Check if there's is password error message
+    expect(
+      screen.getByText(/password must be at least 5 characters/i)
+    ).toBeInTheDocument();
+  });
+
+  // TEST #5
+  test("should show confirm password error if passwords do not match", async () => {
+    // Get the input elements
+    const { emailInput, submitButton, passwordInput, confirmPasswordInput } =
+      getFormElements();
+
+    // Check if there's no confirm password error message
+    expect(
+      screen.queryByText(/passwords do not match/i)
+    ).not.toBeInTheDocument();
+
+    // Type the invalid confirm password
+    await user.type(emailInput, "test@test.com");
+    await user.type(passwordInput, "123456");
+    await user.type(confirmPasswordInput, "1234567");
+    await user.click(submitButton);
+
+    // Check if there's is confirm password error message
+    expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
+  });
+
+  // TEST #6
+  test("valid inputs show no errors and clears fields", async () => {
+    // Get the input elements
+    const { emailInput, submitButton, passwordInput, confirmPasswordInput } =
+      getFormElements();
+
+    // Type the all the confirm values
+    await user.type(emailInput, "test@test.com");
+    await user.type(passwordInput, "123456");
+    await user.type(confirmPasswordInput, "123456");
+    await user.click(submitButton);
+
+    // Check if there's no error messages
+    expect(screen.queryByText(/invalid email/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/password must be at least 5 characters/i)
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/passwords do not match/i)
+    ).not.toBeInTheDocument();
+
+    // Check if all values are empty after submit
+    expect(emailInput).toHaveValue("");
+    expect(passwordInput).toHaveValue("");
+    expect(confirmPasswordInput).toHaveValue("");
+  });
 });
